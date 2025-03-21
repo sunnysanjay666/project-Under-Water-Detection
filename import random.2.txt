@@ -1,0 +1,42 @@
+import random
+
+def detect_pollution():
+    """Simulates pollution detection using sensor data."""
+    return random.uniform(0, 100)  # Pollution level from 0 to 100
+
+def detect_obstacles():
+    """Simulates underwater obstacle detection."""
+    obstacles = ["Rock", "Coral Reef", "Submerged Object", "None"]
+    return random.choice(obstacles)
+
+def detect_marine_life():
+    """Simulates marine life detection."""
+    marine_life = ["Fish", "Turtle", "Jellyfish", "None"]
+    return random.choice(marine_life)
+
+def clean_water(pollution_level):
+    """Cleans water based on pollution level."""
+    if pollution_level > 50:
+        print("High pollution detected! Deploying cleaning mechanism...")
+        return pollution_level * 0.4  # Reducing pollution by 40%
+    elif pollution_level > 20:
+        print("Moderate pollution detected. Running standard filtration...")
+        return pollution_level * 0.7  # Reducing pollution by 30%
+    else:
+        print("Water is clean. No action needed.")
+        return pollution_level
+
+def main():
+    pollution_level = detect_pollution()
+    obstacle = detect_obstacles()
+    marine_life = detect_marine_life()
+    
+    print(f"Detected pollution level: {pollution_level:.2f}")
+    print(f"Detected obstacle: {obstacle}")
+    print(f"Detected marine life: {marine_life}")
+    
+    new_level = clean_water(pollution_level)
+    print(f"Pollution level after cleaning: {new_level:.2f}")
+
+if __name__ == "__main__":
+    main()
