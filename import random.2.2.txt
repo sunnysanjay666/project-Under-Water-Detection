@@ -1,0 +1,44 @@
+import random
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+
+def load_dataset():
+    """Loads the underwater waste dataset."""
+    data = {
+        "sensor_reading": [10, 35, 55, 70, 90],
+        "waste_type": ["Plastic", "Metal", "Organic", "Glass", "None"]
+    }
+    df = pd.DataFrame(data)
+    return df
+
+def train_model(df):
+    """Trains a waste detection model."""
+    X = df[["sensor_reading"]]
+    y = df["waste_type"]
+    le = LabelEncoder()
+    y_encoded = le.fit_transform(y)
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=42)
+    model = RandomForestClassifier(n_estimators=10, random_state=42)
+    model.fit(X_train, y_train)
+    
+    return model, le
+
+def detect_waste(model, le):
+    """Detects waste type using sensor data."""
+    sensor_value = random.randint(0, 100)
+    predicted_class = model.predict([[sensor_value]])[0]
+    waste_type = le.inverse_transform([predicted_class])[0]
+    
+    print(f"Sensor Reading: {sensor_value}")
+    print(f"Detected Waste Type: {waste_type}")
+
+def main():
+    df = load_dataset()
+    model, le = train_model(df)
+    detect_waste(model, le)
+
+if __name__ == "__main__":
+    main()
